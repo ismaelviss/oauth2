@@ -16,6 +16,12 @@ app.post("/api/auth/token", function(req, res){
     res.json({access_token: token });
 });
 
+app.post("/api/auth/tokenjwks", function(req, res){
+    const { email, username, name } = req.body;
+    const token = jwt.sign({sub: username, email, name}, config.authJwksSecret, { algorithm: 'RS256'});
+    res.json({access_token: token });
+});
+
 app.get("/api/auth/verify", function(req, res, next) {
     const { access_token } = req.query
 
